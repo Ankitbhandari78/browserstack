@@ -1,0 +1,249 @@
+# Playwright & Git Quick Notes
+
+## Run All Tests
+
+```bash
+npx playwright test
+```
+
+---
+
+## Run a Single Test File
+
+```bash
+npx playwright test e2e/google.spec.js.  
+```
+
+Run with Chromium:
+
+```bash
+npx playwright test e2e/demo.spec.js --project=chromium
+```
+
+Run with Firefox:
+
+```bash
+npx playwright test e2e/demo.spec.js --project=firefox
+```
+
+---
+
+## Run Multiple Test Files
+
+```bash
+npx playwright test e2e/demo.spec.js e2e/google.spec.js
+```
+
+---
+
+## Run All Tests in Headed Mode
+
+```bash
+npx playwright test --headed
+```
+
+---
+
+## Run Single Test in Headed Mode
+
+```bash
+npx playwright test e2e/demo.spec.js --headed
+```
+
+---
+
+## Run in Headless Mode (Default)
+
+```bash
+npx playwright test
+```
+
+or
+
+```bash
+npx playwright test --headless
+```
+
+---
+
+## Run in Chromium
+
+```bash
+npx playwright test --project=chromium
+```
+
+---
+
+## Run in Firefox
+
+```bash
+npx playwright test --project=firefox
+```
+
+---
+
+## Run in WebKit
+
+```bash
+npx playwright test --project=webkit
+```
+
+---
+
+## Run in Chromium + Firefox
+
+```bash
+npx playwright test --project=chromium --project=firefox
+```
+
+---
+
+## Run in All Browsers
+
+```bash
+npx playwright test
+```
+
+(If your `playwright.config.js` includes Chromium, Firefox, and WebKit.)
+
+---
+
+## Debug Mode
+
+```bash
+npx playwright test --debug
+```
+
+---
+
+## Show HTML Report
+
+```bash
+npx playwright show-report
+```
+
+---
+
+# Git Commands
+
+## Check Status
+
+```bash
+git status
+```
+
+---
+
+## Add One File
+
+```bash
+git add e2e/demo.spec.js
+```
+
+---
+
+## Add Multiple Files
+
+```bash
+git add e2e/demo.spec.js e2e/google.spec.js
+```
+
+---
+
+## Add All Files
+
+```bash
+git add .
+```
+
+---
+
+## Commit Changes
+
+```bash
+git commit -m "Added Playwright tests"
+```
+
+---
+
+## Push to GitHub
+
+```bash
+git push
+```
+
+---
+
+## Push First Time
+
+```bash
+git branch -M main
+git remote add origin https://github.com/USERNAME/REPOSITORY.git
+git push -u origin main
+```
+
+---
+
+## Pull Latest Changes
+
+```bash
+git pull
+```
+
+---
+
+## View Commit History
+
+```bash
+git log --oneline
+```
+
+---
+
+## Remove a File from Git Staging
+
+```bash
+git restore --staged e2e/demo.spec.js
+```
+
+---
+
+# Useful Playwright Commands
+
+## List All Tests
+
+```bash
+npx playwright test --list
+```
+
+---
+
+## Playwright Version
+
+```bash
+npx playwright --version
+```
+
+---
+
+## Install Browsers
+
+```bash
+npx playwright install
+```
+
+---
+
+## Open Browser (Manual)
+
+```bash
+npx playwright open https://www.google.com
+```
+
+---
+
+## Run Only Tests with a Matching Name
+
+```bash
+npx playwright test --grep "Open Google"
+```
