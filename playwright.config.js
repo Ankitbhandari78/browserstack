@@ -6,11 +6,10 @@ module.exports = defineConfig({
 
   projects: [
     {
-      name: 'chrome',
+      name: 'chromium',
       use: {
         ...devices['Desktop Chrome'],
-        channel: 'chrome',
-        headless: true, // Always open Chrome
+        headless: true,
       },
     },
   ],

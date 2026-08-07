@@ -15,10 +15,8 @@ jobs:
         node-version: lts/*
     - name: Install dependencies
       run: npm ci
-    - name: Install Google Chrome
-      run: |
-        sudo apt-get update
-        sudo apt-get install -y google-chrome-stable
+    - name: Install Playwright browsers
+      run: npx playwright install --with-deps chromium
     - name: Run Playwright tests
       run: npx playwright test
     - uses: actions/upload-artifact@v4
