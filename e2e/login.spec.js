@@ -22,7 +22,7 @@ test.describe('OrangeHRM Login (opensource-demo)', () => {
 
     // 3. Verify key dashboard elements are displayed (side menu + user profile)
     const sideMenu = page.locator('.oxd-sidepanel');
-    const userProfile = page.getByAltText('profile picture');
+    const userProfile = page.getByRole('banner').getByAltText('profile picture');
     await expect(sideMenu).toBeVisible({ timeout: 15000 });
     await expect(userProfile).toBeVisible({ timeout: 15000 });
   });
