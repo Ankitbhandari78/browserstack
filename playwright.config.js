@@ -10,7 +10,7 @@ module.exports = defineConfig({
       use: {
         ...devices['Desktop Chrome'],
         channel: 'chrome',
-        headless: false, // Always open Chrome
+        headless: true, // Always open Chrome
       },
     },
   ],
