@@ -24,7 +24,7 @@ test.describe('OrangeHRM Login (opensource-demo)', () => {
     const sideMenu = page.locator('.oxd-sidepanel');
     const userProfile = page.getByAltText('profile picture');
     await expect(sideMenu).toBeVisible({ timeout: 15000 });
-    await expect(userProfile).toBeVisible({ timeout: 15000 });omi
+    await expect(userProfile).toBeVisible({ timeout: 15000 });
   });
 
   test('negative: invalid password shows error', async ({ page }) => {
