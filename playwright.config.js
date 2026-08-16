@@ -1,14 +1,13 @@
-// playwright.config.js
 const { defineConfig, devices } = require('@playwright/test');
 
 module.exports = defineConfig({
   testDir: './e2e',
   testMatch: '**/*.spec.js',
 
-  reporter: [
-    ['line'],
-    ['./reporter.js']
-  ],
+ reporter: [
+  ['list'],
+  ['allure-playwright']
+],
 
   projects: [
     {

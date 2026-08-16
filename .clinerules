@@ -1,0 +1,86 @@
+Target Site Locators & Credentials Reference (bstackdemo.com)
+When writing page objects and tests for bstackdemo.com, utilize these standard locators and credentials:
+
+Credentials
+Valid User: demouser | Password: testingisfun99
+
+Locked User: locked_user | Password: testingisfun99
+
+Fav User: fav_user | Password: testingisfun99
+
+Key Page Elements
+Sign In Link: #signin
+
+Username Dropdown: #username
+
+Password Dropdown: #password
+
+Login Button: #login-btn
+
+Logout Button: #logout
+
+Vendor / Brand Filters: .filters-available-size (e.g. Apple, Samsung, Google, OnePlus)
+
+Product Card: .shelf-item
+
+Add to Cart Button: .shelf-item__buy-btn
+
+Cart Bag / Drawer: .bag
+
+Checkout Button: .buy-btn
+
+Shipping Address Inputs:
+
+First Name: #firstNameInput
+
+Last Name: #lastNameInput
+
+Address: #addressLine1Input
+
+State/Province: #provinceInput
+
+Postal Code: #postCodeInput
+
+Submit Order Button: #checkout-shipping-continue
+
+Directory & File Conventions
+All test code lives under e2e/.
+
+Page Object Model (POM):
+
+One page object per screen or feature flow: pages/<feature>.page.js
+
+One spec file per scenario group: e2e/<feature>.spec.js
+
+File Naming: Lowercase kebab-case filenames (e.g., login.page.js, cart.page.js, checkout.spec.js).
+
+Module System: Use CommonJS (require / module.exports). Do NOT use ES modules (import / export).
+
+Page Object export format: module.exports = { FeaturePage }; or module.exports = FeaturePage;
+
+Spec file import format: const FeaturePage = require('./<feature>.page');
+
+Code Style & Authoring Standards
+Formatting: 2-space indentation throughout.
+
+Page Object Structure:
+
+Store locators as class properties inside the constructor(page) (e.g., this.usernameInput = page.locator('#username');).
+
+Prioritize user-facing locators (getByRole, getByText, getByLabel) where appropriate, maintaining consistency with existing files.
+
+Spec File Structure:
+
+Wrap related test cases in test.describe('Feature Name', () => { ... }).
+
+Use test.beforeEach(async ({ page }) => { ... }) for navigating to [https://bstackdemo.com](https://bstackdemo.com) and performing shared setup/login.
+
+Timeouts & Wait Strategies:
+
+Use explicit timeout arguments on assertions when dealing with dynamic elements (e.g., await expect(element).toBeVisible({ timeout: 5000 });).
+
+Avoid hardcoded sleeps (page.waitForTimeout()). Rely on Playwright auto-waiting and web-first assertions (expect).
+
+Security:
+
+Never hardcode real production credentials in committed code. Use placeholders or environment variables (process.env.BSTACK_USERNAME) where applicable.
