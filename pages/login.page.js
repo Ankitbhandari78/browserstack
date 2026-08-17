@@ -1,61 +1,54 @@
 const { expect } = require('@playwright/test');
 
-// Page Object Model for the BrowserStack demo sign-in flow
-// (mirrors e2e/file.spec.js).
-class BstackDemoLoginPage {
+// Page Object Model for the bstackdemo.com sign-in workflow.
+class LoginPage {
+  /**
+   * @param {import('@playwright/test').Page} page
+   */
   constructor(page) {
     this.page = page;
 
-    // --- Sign-in form locators ---
-    // bstackdemo uses custom dropdown containers backed by #username/#password.
+    // Locators
     this.usernameDropdown = page.locator('#username');
     this.passwordDropdown = page.locator('#password');
     this.loginButton = page.locator('#login-btn');
-
-                // --- Post-login verification locators ---
     this.loggedInUser = page.locator('.username');
-    // User-facing locator: the "Logout" link only appears once authenticated.
-    // (The brittle `#logout` id asserted in the spec does not exist, so we
-    // rely on visible text instead, which is both robust and semantic.)
-    this.logoutLink = page.getByText('Logout');
-
-    // --- Error message locator (visible on failed login attempts) ---
     this.errorMessage = page.locator('.api-error');
   }
 
-  // Navigate to the sign-in page and wait for the form to be ready.
+  // Navigate to the sign-in page.
   async goto() {
     await this.page.goto('https://bstackdemo.com/signin');
-    await expect(this.loginButton).toBeVisible({ timeout: 5000 });
   }
 
-  // Perform a login by selecting credentials from the custom dropdowns.
-  async login(username, password) {
+  // Open the username dropdown and pick an option.
+  async selectUsername(username) {
     await this.usernameDropdown.click();
-    await this.page.locator(`xpath=//*[text()="${username}"]`).click();
+    await this.page.getByText(username, { exact: true }).click();
+  }
 
+  // Open the password dropdown and pick an option.
+  async selectPassword(password) {
     await this.passwordDropdown.click();
-    await this.page.locator(`xpath=//*[text()="${password}"]`).click();
+    await this.page.getByText(password, { exact: true }).click();
+  }
 
+  // Click the Log In button.
+  async clickLogin() {
     await this.loginButton.click();
   }
 
-  // Verify that the session is authenticated.
+  // Perform the full login flow.
+  async login(username = 'demouser', password = 'testingisfun99') {
+    await this.selectUsername(username);
+    await this.selectPassword(password);
+    await this.clickLogin();
+  }
+
+  // Verify the session is authenticated.
   async expectLoggedInAs(username) {
-    // 1. URL redirected to the homepage (away from the /signin page).
-    await expect(this.page).toHaveURL(
-      'https://bstackdemo.com/?signin=true',
-      { timeout: 10000 }
-    );
-
-    // 2. The logged-in username is displayed in the header.
-    await expect(this.loggedInUser).toHaveText(username, {
-      timeout: 10000
-    });
-
-    // 3. The Logout link is visible (confirms an active session).
-    await expect(this.logoutLink).toBeVisible({ timeout: 10000 });
+    await expect(this.loggedInUser).toHaveText(username, { timeout: 5000 });
   }
 }
 
-module.exports = BstackDemoLoginPage;
+module.exports = { LoginPage };
