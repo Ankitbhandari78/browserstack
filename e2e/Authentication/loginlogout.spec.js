@@ -35,5 +35,4 @@ test('Login to Homepage and Logout Flow', async ({ page }) => {
   // B. Verify the element #signin now displays "Sign In" instead of "Logout"
   const signinLink = page.locator('#signin');
   await expect(signinLink).toHaveText('Sign In');
-  await page.waitForTimeout(500000); // Optional: wait for a few seconds to ensure the page has updated
 }); 
