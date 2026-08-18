@@ -3,16 +3,16 @@ const { test, expect } = require('@playwright/test');
 /**
  * Toggles a vendor filter checkbox on/off.
  * Filter structure: label > input[type="checkbox"] + span.checkmark
- * We drive the real checkbox input directly for a deterministic state
- * ({ force: true } because the input is visually hidden by CSS).
+ * We click the visible label (text/checkmark) to toggle reliably instead of
+ * force-clicking the hidden input (which can miss on re-render/animation).
  */
 async function toggleBrandFilter(page, brandLabel, on) {
   const checkbox = page.locator(`input[value="${brandLabel}"]`);
+  // Click the visible filter row to toggle state
+  await page.locator('label', { hasText: brandLabel }).click();
   if (on) {
-    await checkbox.check({ force: true });
     await expect(checkbox).toBeChecked();
   } else {
-    await checkbox.uncheck({ force: true });
     await expect(checkbox).not.toBeChecked();
   }
 }

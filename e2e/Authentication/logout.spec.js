@@ -27,11 +27,14 @@ test('Positive Login and Logout Test Case', async ({ page }) => {
   // ------------------------------------------------------------------
   // 6. LOGOUT FLOW
   // ------------------------------------------------------------------
-  // Click the logout button using your exact locator
-  await page.getByText('logout', { exact: true }).click();
+  // The logout control is a navigation link named "Logout".
+  const logoutBtn = page.getByRole('link', { name: 'Logout' });
+  await expect(logoutBtn).toBeVisible({ timeout: 5000 });
+  await logoutBtn.click();
 
   // 7. Verification / Assertion for Logout
-  // Verify user is redirected back to signin or login button is visible again
-  await expect(page).toHaveURL(/.*signin/);
-  await expect(page.locator('#login-btn')).toBeVisible();
+  // After logout bstackdemo stays on the homepage and shows the "Sign In" link again.
+  await expect(page.getByRole('link', { name: 'Sign In' })).toBeVisible({ timeout: 5000 });
+  await expect(page.locator('.username')).not.toBeVisible();
+  await expect(logoutBtn).not.toBeVisible();
 });

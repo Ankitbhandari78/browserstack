@@ -16,11 +16,10 @@ adding items to the cart, the checkout/shipping flow, and order confirmation.
 | Authentication | `e2e/Authentication/loginpositive.spec.js` | Successful login with valid credentials |
 | Authentication | `e2e/Authentication/loginnegative.spec.js` | Error-message exploration (empty fields, missing password, locked user) |
 | Authentication | `e2e/Authentication/logout.spec.js` | Login followed by logout |
-| Authentication | `e2e/loginlogout.spec.js` | Login → homepage → logout flow |
-| Shopping | `e2e/order.spec.js` | Apple filter → add iPhone 12 → checkout → confirmation |
-| Shopping | `e2e/productfilter/iphone-order.spec.js` | Same flow using the Page Object Model |
+| Authentication | `e2e/Authentication/loginlogout.spec.js` | Login → homepage → logout flow |
+| Shopping | `e2e/productfilter/iphone-order.spec.js` | Apple filter → add iPhone 12 → checkout → confirmation (POM) |
 | Shopping | `e2e/productfilter/multi-vendor-order.spec.js` | Multi-vendor cart (Samsung Galaxy S20 + Google Pixel 4) |
-| Shopping | `e2e/oppo.spec.js` | OnePlus filter → add One Plus 8 → checkout |
+| Shopping | `e2e/productfilter/oppo.spec.js` | OnePlus filter → add One Plus 8 → checkout |
 
 ---
 
@@ -42,11 +41,8 @@ adding items to the cart, the checkout/shipping flow, and order confirmation.
 .
 ├── .github/workflows/playwright.yml   # CI pipeline
 ├── e2e/                               # Test specs (one file per scenario group)
-│   ├── Authentication/                # loginpositive, loginnegative, logout
-│   ├── productfilter/                 # iphone-order, multi-vendor-order
-│   ├── loginlogout.spec.js
-│   ├── oppo.spec.js
-│   └── order.spec.js
+│   ├── Authentication/                # loginlogout, loginnegative, loginpositive, logout
+│   └── productfilter/                 # iphone-order, multi-vendor-order, oppo
 ├── pages/                             # Page Object Model classes
 │   ├── login.page.js
 │   ├── store.page.js
@@ -94,9 +90,8 @@ npx playwright test e2e/Authentication/loginnegative.spec.js
 npx playwright test e2e/Authentication/logout.spec.js
 
 # Shopping flows
-npx playwright test e2e/order.spec.js
-npx playwright test e2e/oppo.spec.js
-npx playwright test e2e/loginlogout.spec.js
+npx playwright test e2e/Authentication/loginlogout.spec.js
+npx playwright test e2e/productfilter/oppo.spec.js
 npx playwright test e2e/productfilter/iphone-order.spec.js
 npx playwright test e2e/productfilter/multi-vendor-order.spec.js
 ```
@@ -163,11 +158,10 @@ Pushing to `main` (or opening a PR) triggers `.github/workflows/playwright.yml`,
 
 ## 🩹 Current Test Status (as of last full run)
 
-- ✅ Passing: `loginpositive`, `loginnegative`, `oppo`, `multi-vendor-order`, `iphone-order`
-- ❌ Known failures (work in progress):
-  - `logout.spec.js` — logout locator/assertions don't match the live site
-  - `loginlogout.spec.js` — contains a hardcoded 500s `waitForTimeout`
-  - `order.spec.js` — wrong confirmation assertion (site shows "Order placed", not a "Thank you" heading)
+- ✅ Passing: `loginpositive`, `loginnegative`, `logout`, `loginlogout`, `oppo`, `multi-vendor-order`, `iphone-order`
+- 🟡 Notes:
+  - `loginnegative.spec.js` is an exploration script — it logs page output but currently has **no assertions** (improvement planned)
+  - All specs use the public demo credentials (`demouser` / `testingisfun99`)
 
 ---
 
