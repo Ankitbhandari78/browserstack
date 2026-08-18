@@ -1,7 +1,7 @@
 const { test, expect } = require('@playwright/test');
-const { LoginPage } = require('../pages/login.page');
-const { StorePage } = require('../pages/store.page');
-const { CheckoutPage } = require('../pages/checkout.page');
+const { LoginPage } = require('../../pages/login.page');
+const { StorePage } = require('../../pages/store.page');
+const { CheckoutPage } = require('../../pages/checkout.page');
 
 test.describe('iPhone Order', () => {
   let loginPage;

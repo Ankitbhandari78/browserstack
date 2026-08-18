@@ -84,3 +84,6 @@ Avoid hardcoded sleeps (page.waitForTimeout()). Rely on Playwright auto-waiting 
 Security:
 
 Never hardcode real production credentials in committed code. Use placeholders or environment variables (process.env.BSTACK_USERNAME) where applicable.
+
+If test fail send the report which test has faild and which line  .
+

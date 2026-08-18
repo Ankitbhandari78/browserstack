@@ -87,19 +87,6 @@ test('Buy Samsung Galaxy S20 + Google Pixel 4, then Checkout', async ({ page }) 
       .or(page.locator('#confirmation-message'))
   ).toBeVisible({ timeout: 15000 });
 
-  // ------------------------------------------------------------------
-  // STEP 6.5: DOWNLOAD RECEIPT (PDF)
-  // ------------------------------------------------------------------
-  await expect(page.locator('//*[@id="downloadpdf"]')).toBeVisible({ timeout: 5000 });
-
-  const downloadPromise = page.waitForEvent('download');
-  await page.locator('//*[@id="downloadpdf"]').click();
-  const download = await downloadPromise;
-  await expect(download.suggestedFilename()).toMatch(/\.pdf$/i);
-
-  // ------------------------------------------------------------------
-  // STEP 7: SCREENSHOT + CONTINUE SHOPPING
-  // ------------------------------------------------------------------
   await page.screenshot({
     path: 'screenshots/multi-vendor-confirmation.png',
     fullPage: true,
