@@ -7,12 +7,9 @@ UI automation against a realistic shopping flow.
 Tests cover authentication (positive & negative login, logout), product filtering by vendor/brand,
 adding items to the cart, the checkout/shipping flow, and order confirmation.
 
----
 
-## ✨ What Is Covered
+ What Is Covered
 
-| Area | Test file | Scenarios |
-|------|-----------|-----------|
 | Authentication | `e2e/Authentication/loginpositive.spec.js` | Successful login with valid credentials |
 | Authentication | `e2e/Authentication/loginnegative.spec.js` | Error-message exploration (empty fields, missing password, locked user) |
 | Authentication | `e2e/Authentication/logout.spec.js` | Login followed by logout |
@@ -22,7 +19,7 @@ adding items to the cart, the checkout/shipping flow, and order confirmation.
 
 ---
 
-## 🛠 Tech Stack
+ Tech Stack
 
 - **Node.js** 20+
 - **Playwright Test** (`@playwright/test`)
@@ -32,57 +29,8 @@ adding items to the cart, the checkout/shipping flow, and order confirmation.
 - **Custom console reporter** (`reporter.js`)
 - **GitHub Actions** CI (`.github/workflows/playwright.yml`)
 
----
 
-## 📁 Project Structure
 
-```
-.
-├── .github/workflows/playwright.yml   # CI pipeline
-├── e2e/                               # Test specs (one file per scenario group)
-│   ├── Authentication/                # loginnegative, loginpositive, logout
-│   └── productfilter/                 # iphone-order, multi-vendor-order, oppo
-├── pages/                             # Page Object Model classes
-│   ├── login.page.js
-│   ├── store.page.js
-│   └── checkout.page.js
-├── playwright.config.js               # Playwright configuration
-├── reporter.js                        # Custom console/failure reporter
-├── .clinerules                        # Locators, credentials & code conventions
-└── package.json
-```
-
----
-
-## 🚀 Getting Started
-
-### 1. Prerequisites
-
-- **Node.js** 20 or newer
-- **npm**
-- **Google Chrome** installed locally
-
-### 2. Install dependencies
-
-```bash
-npm install
-```
-
-### 3. Install Playwright browser(s)
-
-```bash
-npx playwright install --with-deps chrome
-```
-
-### 4. Run the full suite
-
-```bash
-npx playwright test
-```
-
-### 5. Run a single test file
-
-```bash
 # Authentication
 npx playwright test e2e/Authentication/loginpositive.spec.js
 npx playwright test e2e/Authentication/loginnegative.spec.js
@@ -100,37 +48,17 @@ npx playwright test e2e/productfilter/multi-vendor-order.spec.js
 npx playwright test --grep "Positive Login"
 ```
 
----
-
-## 📊 Reporting
-
-### Allure report
-
-```bash
-npx playwright test --reporter=allure-playwright
-allure generate allure-results --clean -o allure-report
-allure open allure-report
-```
-
 ### Custom failure report
 
 `reporter.js` prints a detailed failure report to the console (failed file, test name,
 **line & column**, error message, and a short stack trace) whenever a test fails.
 Enable it in `playwright.config.js`.
 
----
 
-## 🔐 Test Site Credentials
 
-These are the **public demo credentials** for bstackdemo.com:
 
-| User | Password | Purpose |
-|------|----------|---------|
-| `demouser` | `testingisfun99` | Valid user (used by most tests) |
-| `locked_user` | `testingisfun99` | Locked account — triggers login error |
-| `fav_user` | `testingisfun99` | Favourites-enabled account |
 
----
+
 
 ## 🧩 Page Object Model (POM)
 
@@ -140,9 +68,8 @@ These are the **public demo credentials** for bstackdemo.com:
 - Specs import with `require('../pages/login.page')` (from `e2e/`)
   or `require('../../pages/login.page')` (from a subfolder like `e2e/productfilter/`)
 
----
 
-## ⚙️ CI / GitHub Actions
+
 
 Pushing to `main` (or opening a PR) triggers `.github/workflows/playwright.yml`, which:
 
@@ -152,17 +79,5 @@ Pushing to `main` (or opening a PR) triggers `.github/workflows/playwright.yml`,
 4. Runs `npx playwright test`
 5. Uploads `playwright-report/` as a build artifact (30-day retention)
 
----
 
-## 🩹 Current Test Status (as of last full run)
 
-- ✅ Passing: `loginpositive`, `loginnegative`, `logout`, `oppo`, `multi-vendor-order`, `iphone-order`
-- 🟡 Notes:
-  - `loginnegative.spec.js` is an exploration script — it logs page output but currently has **no assertions** (improvement planned)
-  - All specs use the public demo credentials (`demouser` / `testingisfun99`)
-
----
-
-## 📝 License
-
-ISC
