@@ -1,26 +1,15 @@
-const { test, expect } = require('@playwright/test');
+const { test } = require('@playwright/test');
+const { LoginPage } = require('../../pages/login.page');
 
 test('Positive Login Test Case', async ({ page }) => {
-  // 1. Navigate to the login page
-  await page.goto('https://bstackdemo.com/signin');
+  const loginPage = new LoginPage(page);
 
-  // 2. Select Username ('demouser')
-  // Click the username container to open dropdown
-  await page.locator('xpath=//*[@id="username"]').click();
-  // Select the 'demouser' option from the dropdown list
-  await page.locator('xpath=//*[text()="demouser"]').click();
+  // Navigate to the sign-in page (URL lives in the page model).
+  await loginPage.goto();
 
-  // 3. Select Password ('testingisfun99')
-  // Click the password container to open dropdown
-  await page.locator('xpath=//*[@id="password"]').click();
-  // Select the 'testingisfun99' option from the dropdown list
-  await page.locator('xpath=//*[text()="testingisfun99"]').click();
+  // Perform the full login flow (username/password live in the page model).
+  await loginPage.login();
 
-  // 4. Click the Log In button
-  await page.locator('xpath=//*[@id="login-btn"]').click();
-
-  // 5. Verification / Assertion
-  // Verify successful login by checking the URL or user profile text
-  await expect(page).not.toHaveURL('https://bstackdemo.com/signin');
-  await expect(page.locator('.username')).toHaveText('demouser');
+  // Verify successful login (URL + username assertions live in the page model).
+  await loginPage.expectLoggedIn();
 });
