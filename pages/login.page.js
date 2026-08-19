@@ -67,9 +67,8 @@ class LoginPage {
     await this.expectLoggedInAs(DEFAULT_USERNAME);
   }
 
-  // ------------------------------------------------------------------
   // Negative login helpers (credentials stay inside the page model).
-  // ------------------------------------------------------------------
+  
 
   // Assert the error message shown after a failed login.
   async expectErrorMessage(message) {

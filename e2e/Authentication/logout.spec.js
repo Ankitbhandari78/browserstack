@@ -24,9 +24,9 @@ test('Positive Login and Logout Test Case', async ({ page }) => {
   await expect(page).not.toHaveURL('https://bstackdemo.com/signin');
   await expect(page.locator('.username')).toHaveText('demouser');
 
-  // ------------------------------------------------------------------
+ 
   // 6. LOGOUT FLOW
-  // ------------------------------------------------------------------
+ 
   // The logout control is a navigation link named "Logout".
   const logoutBtn = page.getByRole('link', { name: 'Logout' });
   await expect(logoutBtn).toBeVisible({ timeout: 5000 });
