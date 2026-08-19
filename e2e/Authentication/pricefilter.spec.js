@@ -42,14 +42,20 @@ test('Login, Filter OnePlus and Sort by Price', async ({ page }) => {
 
   // Products reorder from highest to lowest price (non-increasing: ties allowed,
   // e.g. One Plus 8T and One Plus 8 Pro both cost $899.00 on bstackdemo).
-  const priceTexts = await page.locator('.shelf-item__price').allTextContents();
-  const prices = priceTexts.map((t) => {
-    const match = String(t).match(/\$([\d,]+\.\d{2})/);
-    return match ? parseFloat(match[1].replace(/,/g, '')) : 0;
-  });
-  for (let i = 0; i < prices.length - 1; i++) {
-    expect(prices[i]).toBeGreaterThanOrEqual(prices[i + 1]);
-  }
+  // Poll until the async re-render reflects the sort — robust across CI/local.
+  await expect
+    .poll(
+      async () => {
+        const priceTexts = await page.locator('.shelf-item__price').allTextContents();
+        const prices = priceTexts.map((t) => {
+          const match = String(t).match(/\$([\d,]+\.\d{2})/);
+          return match ? parseFloat(match[1].replace(/,/g, '')) : 0;
+        });
+        return prices.every((v, i) => i === 0 || prices[i - 1] >= v);
+      },
+      { timeout: 10000, intervals: [250, 500, 1000] }
+    )
+    .toBe(true);
 
   // 9. Take a screenshot
   await page.screenshot({ path: 'screenshots/oneplus-highest-price.png', fullPage: true });
